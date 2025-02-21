@@ -44,6 +44,10 @@ function App() {
       ))
     ))), [boxes],
   );
+
+  const allSpacesTaken: boolean = useMemo(() => (
+    boxes.every(box => box !== '')
+  ), [boxes]);
   
   const handleClick = (index: number, turn: string) => {
     if (boxes[index] !== '' || winner) return;
@@ -62,7 +66,9 @@ function App() {
     <>
       {winner
         ? <p className="winner">Winner is: {winner}</p>
-        : <p>Current turn: {turn}</p>
+        : allSpacesTaken
+          ? <p>No winner! Reset now.</p>
+          : <p>Current turn: {turn}</p>
       }
 
       <div className={`container${winner ? ' disabled' : ''}`}>
